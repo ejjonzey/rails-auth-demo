@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource  only: [:edit, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
@@ -11,10 +12,13 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @user = current_user
+    @post = Post.find(params[:id])
   end
 
   # GET /posts/new
   def new
+    @user = current_user
     @post = Post.new
   end
 
